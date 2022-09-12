@@ -1,11 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ProjOnTheFly
 {
     internal class Program
     {
+        internal static bool BuscarNoArray(string op, string[] options)
+        {
+            for (int i = 0; i < options.Length; i++)
+                if (options[i] == op) return true;
+            return false;
+        }
+
+        internal static string ReadString(string text)
+        {
+            Console.Write(text);
+            return Console.ReadLine();
+        }
+
+        internal static string ReadStringCpf(string text)
+        {
+            Console.Write(text);
+            return Console.ReadLine();
+        }
+
         static void Main(string[] args)
         {
             int escolha = 0;
@@ -13,50 +33,47 @@ namespace ProjOnTheFly
             List<Passageiro> listaPassageiro = new List<Passageiro>();
             Passageiro passageiro = new Passageiro();
 
-            passageiro.CadastrarPassageiro(listaPassageiro);
-            //passageiro.ImprimirPassageiro(List<Passageiro> listaPassageiro);
-            //passageiro.LocalizarPassageiro(List<Passageiro> listaPassageiro);
-            //passageiro.EditarPassageiro(List<Passageiro> listaPassageiro);
-
-            //MENU PRINCIPAL
-            while(escolha != 0 && escolha != 1 && escolha != 2 && escolha != 3 && escolha != 4)
+            Console.WriteLine("Bem-vindo(a)!");
+            do
             {
-                Console.WriteLine("MENU DE OPÇÕES:\n01. Cadastrar\n02. Localizar\n03. Editar\n04. Ver Cadastro\n00. Sair");
+                Console.WriteLine("\nMENU DE OPÇÕES:\n01. Cadastrar\n02. Localizar\n03. Editar\n04. Ver Cadastro\n00. Sair");
                 escolha = int.Parse(Console.ReadLine());
-                Console.Clear();
-                if(escolha == 1)//CADASTRO
+                //MENU PRINCIPAL
+                //CADASTRAR
+                if (escolha == 1)
                 {
-                    Console.WriteLine("Formulário de cadastro:");
-                    //passageiro = passageiro.CadastrarPassageiro(List<Passageiro> listaPassageiro);
-                    Console.WriteLine("Voltando ao menu principal!\nPor favor aguarde.");
-                    Thread.Sleep(2000);
-                    Console.Clear();
+                    passageiro.CadastrarPassageiro(listaPassageiro);
                 }
-                else if(escolha == 2)//LOCALIZAR
+                //LOCALIZAR
+                else if (escolha == 2)
                 {
-                    Console.Clear();
-                    Console.WriteLine("Insira ");
-                    string validacaoCPF = Console.ReadLine();
-                    Passageiro searchPassageiro = null;
+                    passageiro.LocalizarPassageiro(listaPassageiro);
                 }
-                else if (escolha == 3)//EDITAR
+                //EDITAR
+                else if (escolha == 3)
                 {
-                    Console.Clear();
-                    //passageiro = passageiro.EditarPassageiro(List<Passageiro> listaPassageiro);
-                    Console.WriteLine("Voltando ao menu principal!\nPor favor aguarde.");
-                    Thread.Sleep(2000);
-                    Console.Clear();
+                    passageiro.EditarPassageiro(listaPassageiro);
                 }
-                else if (escolha == 4)//IMPRIMIR
+                //IMPRIMIR
+                else if (escolha == 4)
                 {
+                    passageiro.ImprimirPassageiro(listaPassageiro);
                 }
-                else if(escolha == 0)//SAIR
+                //SAIR
+                else if (escolha == 0)
                 {
                     Console.WriteLine("Agradecemos a preferência, volte sempre!");
+                    Thread.Sleep(2000);
+                    Console.Clear();
                 }
                 else
+                {
+                    Thread.Sleep(2000);
                     Console.WriteLine("Opção inexistente!");
-            }
+                    Console.Clear();
+                }
+            } while (true);
+            Console.Clear();
         }
     }
 }
