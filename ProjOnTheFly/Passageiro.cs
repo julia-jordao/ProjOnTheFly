@@ -37,8 +37,10 @@ namespace ProjOnTheFly
         {
             string cpfString;
             long cpfLong;
-            int digVerificador, v1 = 0, v2 = 0, aux;
-            int[] digitosInvertidosCPF = new int[9];
+            int digVerificador, v1, v2, aux;
+            int[] digitosCPF = new int[9];
+            bool digitosIguais = false;
+
             do
             {
                 Console.Write(text);
@@ -53,20 +55,32 @@ namespace ProjOnTheFly
                 for (int i = 0; i < 9; i++)
                 {
                     aux = (int)cpfLong % 10;
-                    digitosInvertidosCPF[8 - i] = aux;
+                    digitosCPF[i] = aux;
                     cpfLong /= 10;
                 }
+                digitosIguais = false;
+                for (int i = 0; i < digitosCPF.Length; i++)
+                {
+                    if (i == digitosCPF.Length - 1)
+                    {
+                        Console.WriteLine("O CPF nao segue as regras de validacao da Receita Federal!");
+                        digitosIguais = true;
+                        break;
+                    }
+                    if (digitosCPF[i] != digitosCPF[i + 1]) break;
+                }
+                if (digitosIguais) continue;
                 v1 = v2 = 0;
                 for (int i = 0; i < 9; i++)
                 {
-                    v1 += (int)digitosInvertidosCPF[i] * (9 - i);
-                    v2 += (int)digitosInvertidosCPF[i] * (8 - i);
+                    v1 += digitosCPF[i] * (9 - i);
+                    v2 += digitosCPF[i] * (8 - i);
                 }
                 v1 = (v1 % 11) % 10;
                 v2 += v1 * 9;
                 v2 = (v2 % 11) % 10;
-                if (v2 * 10 + v1 == digVerificador) return cpfString;
-                else Console.WriteLine("O CPF não segue as regras de validação da Receita Federal!");
+                if (v1 * 10 + v2 == digVerificador) return cpfString;
+                else Console.WriteLine("O CPF nao segue as regras de validacao da Receita Federal!");
             } while (true);
         }
 
